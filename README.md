@@ -21,10 +21,27 @@ Pipeline version: v0.32.1
 kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
 ```
 
+
 ### Installing Tekton Dashboard
 ```
 kubectl apply -f https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
 ```
+Expected output is
+<pre>
+[root@master ~]# kubectl apply -f https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
+customresourcedefinition.apiextensions.k8s.io/extensions.dashboard.tekton.dev created
+serviceaccount/tekton-dashboard created
+role.rbac.authorization.k8s.io/tekton-dashboard-info created
+clusterrole.rbac.authorization.k8s.io/tekton-dashboard-backend created
+clusterrole.rbac.authorization.k8s.io/tekton-dashboard-tenant created
+rolebinding.rbac.authorization.k8s.io/tekton-dashboard-info created
+clusterrolebinding.rbac.authorization.k8s.io/tekton-dashboard-backend created
+configmap/dashboard-info created
+service/tekton-dashboard created
+deployment.apps/tekton-dashboard created
+clusterrolebinding.rbac.authorization.k8s.io/tekton-dashboard-tenant created
+</pre>
+
 Accessing the Tekton dashboard
 ```
 kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
