@@ -16,6 +16,103 @@ Client version: 0.21.0
 Pipeline version: v0.32.1
 </pre>
 
+### Installing Openshift(Code Ready Containers-CRC)
+```
+cd ~/Downloads
+tar xvf crc-linux-amd64.tar.xz
+cd crc-linux-1.38.0-amd64/
+./crc setup
+./crc start
+```
+
+The expected output is
+<pre>
+[jegan@tektutor crc-linux-1.38.0-amd64]$ ./crc start
+INFO Checking if running as non-root              
+INFO Checking if running inside WSL2              
+INFO Checking if crc-admin-helper executable is cached 
+INFO Checking for obsolete admin-helper executable 
+INFO Checking if running on a supported CPU architecture 
+INFO Checking minimum RAM requirements            
+INFO Checking if crc executable symlink exists    
+INFO Checking if Virtualization is enabled        
+INFO Checking if KVM is enabled                   
+INFO Checking if libvirt is installed             
+INFO Checking if user is part of libvirt group    
+INFO Checking if active user/process is currently part of the libvirt group 
+INFO Checking if libvirt daemon is running        
+INFO Checking if a supported libvirt version is installed 
+INFO Checking if crc-driver-libvirt is installed  
+INFO Checking crc daemon systemd socket units     
+INFO Checking if systemd-networkd is running      
+INFO Checking if NetworkManager is installed      
+INFO Checking if NetworkManager service is running 
+INFO Checking if /etc/NetworkManager/conf.d/crc-nm-dnsmasq.conf exists 
+INFO Checking if /etc/NetworkManager/dnsmasq.d/crc.conf exists 
+INFO Checking if libvirt 'crc' network is available 
+INFO Checking if libvirt 'crc' network is active  
+INFO Starting CodeReady Containers VM for OpenShift 4.9.12... 
+INFO CodeReady Containers instance is running with IP 192.168.130.11 
+INFO CodeReady Containers VM is running           
+INFO Check internal and public DNS query...       
+INFO Check DNS query from host...                 
+INFO Verifying validity of the kubelet certificates... 
+INFO Starting OpenShift kubelet service           
+INFO Waiting for kube-apiserver availability... [takes around 2min] 
+INFO Waiting for user's pull secret part of instance disk... 
+INFO Starting OpenShift cluster... [waiting for the cluster to stabilize] 
+INFO 2 operators are progressing: openshift-controller-manager, operator-lifecycle-manager-packageserver 
+INFO 2 operators are progressing: openshift-controller-manager, operator-lifecycle-manager-packageserver 
+INFO 3 operators are progressing: kube-apiserver, openshift-controller-manager, operator-lifecycle-manager-packageserver 
+INFO 2 operators are progressing: kube-apiserver, openshift-controller-manager 
+INFO Operator authentication is not yet available 
+INFO Operator authentication is not yet available 
+INFO All operators are available. Ensuring stability... 
+INFO Operators are stable (2/3)...                
+INFO Operators are stable (3/3)...                
+INFO Adding crc-admin and crc-developer contexts to kubeconfig... 
+Started the OpenShift cluster.
+
+The server is accessible via web console at:
+  https://console-openshift-console.apps-crc.testing
+
+Log in as administrator:
+  Username: kubeadmin
+  Password: B8XxM-aY9yz-zhwJY-5HU7d
+
+Log in as user:
+  Username: developer
+  Password: developer
+
+Use the 'oc' command line interface:
+  $ eval $(crc oc-env)
+  $ oc login -u developer https://api.crc.testing:6443
+</pre>
+
+You may login now as shown below
+
+<pre>
+[jegan@tektutor crc-linux-1.38.0-amd64]$ eval $(./crc oc-env)
+[jegan@tektutor crc-linux-1.38.0-amd64]$ oc login -u developer https://api.crc.testing:6443
+Logged into "https://api.crc.testing:6443" as "developer" using existing credentials.
+
+You don't have any projects. You can try to create a new project, by running
+
+    oc new-project <projectname>
+</pre>
+
+### Installing Tekton in Openshift
+```
+oc new-project tekton-pipelines --display-name='Tekton Pipelines'
+oc adm policy add-scc-to-user anyuid -z tekton-pipelines-controller
+oc apply --filename https://storage.googleapis.com/tekton-releases/latest/release.yaml
+```
+You may now check any pods are running in the namespace tekton-pipelines
+```
+oc get pods --namespace tekton-pipelines --watch
+```
+
+
 ### Installing Tekton in Kubernetes Cluster
 ```
 kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
