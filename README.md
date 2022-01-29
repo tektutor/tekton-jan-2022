@@ -103,6 +103,7 @@ You don't have any projects. You can try to create a new project, by running
 
 ### Troubleshooting CRC start
 OpenShift creates a Virtual Machine
+
 OpenShift CRC requires 
 - Virtualization enabled on the BIOS
 - 8 GB RAM
