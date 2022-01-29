@@ -101,6 +101,21 @@ You don't have any projects. You can try to create a new project, by running
     oc new-project <projectname>
 </pre>
 
+### Troubleshooting CRC start
+OpenShift creates a Virtual Machine
+OpenShift CRC requires 
+- Virtualization enabled on the BIOS
+- 8 GB RAM
+- 4 Virtual CPU cores
+- 35 GB storage, you may need more if you wish to install other operators
+Make sure your base machine where CRC is installed has more than 4 vCPUs, atleast 8 vCPUs, 16 GB RAM and 250~300 GB HDD(storage)
+
+At times, crc start get's struck due to memory/disk pressure,etc.  In such cases, you just need to
+```
+./crc stop
+./crc start
+```
+
 ### Installing Tekton in Openshift
 ```
 oc new-project tekton-pipelines --display-name='Tekton Pipelines'
