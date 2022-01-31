@@ -23,6 +23,7 @@
 - the definition of deployment that resides in the etcd datastore maintained by API Server on the master node
 - each deployment has one or ReplicaSets under them
 - Deployment manages ReplicaSet
+- For each version of your application deployed there would be one ReplicaSet
 - Rolling update
     - upgrading your application from one version to the other without any downtime
     - when things go wrong, even we can revert by rolling back to older stable version of your application without downtime
