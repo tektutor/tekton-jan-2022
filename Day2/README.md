@@ -4,7 +4,7 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/bin
 ```
-When prompted for password, type welcome as the administrator password in your Ubuntu Lab machine.
+When prompted for password, type 'welcome' as the administrator password in your Ubuntu Lab machine.
 
 ### Installing Code Ready Containers in Linux
 ```
@@ -179,7 +179,7 @@ In order to deploy any applications, you should first create a project in OpenSh
 ```
 oc new-project tektutor
 ```
-Name of the project is user-defined, you may replace 'tektutor' with something you wish.
+Name of the project is user-defined, you may replace 'tektutor' with some name as per your preference.
 
 ### Delete a project
 This will delete all applications deployed within the project also. So think twice, before your do it.
