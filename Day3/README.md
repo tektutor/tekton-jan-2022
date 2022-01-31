@@ -18,7 +18,7 @@ Stateless applications in Kubernetes are deployed, monitored and healed automati
 
 Stateful applications are associated with a data that are read, updated, deleted, etc.,
 When a cluster of such applications are deployed into Kubernetes, it isn't possible for Kubernetes to automatically
-heal that when one of more replicas of the instances becomes unresponsive.  Hence, generally an expert who knows about the application better manages that.
+heal that when one of more replicas of the instances becomes unresponsive.  Hence, generally an expert who knows about the application better manages that manually.
 
 For example: 
    Deploying a Cluster of mongodb databases into K8s/Openshift, it isn't as straight forward as a stateless application.  
@@ -40,6 +40,35 @@ Developing Kubernetes Operator involves writing lot of code, typically in Go pro
 
 ### What is Operator Metering?
  - a metrics system that accounts for Operators' use of cluster resources.
+ - Budgeting, Billing, Metrics aggregation
+
+### What is an Operator Maturity Model?
+
+Phase 1 - Basic Installation
+ - Automated application provisioning and configuration Management
+ - Can be done using Helm, Ansible/Puppet/Chef/Salt or Go
+
+Phase 2 - Seamless Upgrades
+ - Patch and minor version upgrades
+ - Can be done using Helm, Ansible/Puppet/Chef/Salt or Go
+
+PHase 3 - Full Lifecycle
+ - App lifecycle, storage lifecycle ( backup, failure and recovery )
+ - Can be done Using Configuration Management Tools (Ansible, Puppet, Chef or Salt )
+ - Can also done in Go
+
+Phase 4 - Deep Insights
+ - Metrics, alerts, log processing and worload analysis
+ - Can be automated Using Configuration Management Tools (Ansible, Puppet, Chef or Salt )
+ - Can also be automated in Go
+
+Phase 5 - Auto Pilot
+ - Horizontal/Vertical scaling
+ - auto config tuning
+ - abnormal detection
+ - schedule tuning
+ - Can be automated Using Configuration Management Tools (Ansible, Puppet, Chef or Salt )
+ - Can also be automated in Go
 
 ### Creating a CRD 
 ```
@@ -51,6 +80,9 @@ kubectl create -f etcd-operator-crd.yaml
 
 Listing the crd
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl get crd
 ```
 
@@ -64,26 +96,41 @@ kubectl create -f etcd-operator-sa.yaml
 
 Listing the service accounts
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl get serviceaccounts
 ```
 
 ### Creating a role
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl create -f etcd-operator-role.yaml
 ```
 
 ### Creating a role-binding
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl create -f etcd-operator-rolebinding.yaml
 ```
 
 ### Deploying the etcd operator
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl create -f etcd-operator-deployment.yaml
 ```
 
 Listing the deployment
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl get deployments
 ```
 
@@ -95,6 +142,9 @@ kubectl get pods
 
 ### Creating an etcd cluster
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl create -f etcd-cluster-cr.yaml
 ```
 
@@ -127,6 +177,9 @@ etcdctl --endpoints $ETCDCSVC get foo
 ### Scaling the etcd cluster
 Update the size form 3 to 4 and apply the changes as shown below
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl apply -f etcd-cluster-cr.yaml
 ```
 
@@ -153,6 +206,9 @@ kubectl describe etcdcluster/example-etcd-cluster
 
 ### Upgrading etcd version from 3.1.10 to 3.2.13 by editing etcd-cluster-cr.yaml
 ```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
 kubectl apply -f etcd-cluster-cr.yaml
 ```
 
