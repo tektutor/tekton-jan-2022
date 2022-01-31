@@ -120,21 +120,18 @@ At times, crc start get's struck due to memory/disk pressure,etc.  In such cases
 
 ### Installing Tekton in Openshift
 ```
-oc new-project tekton-pipelines --display-name='Tekton Pipelines'
-oc adm policy add-scc-to-user anyuid -z tekton-pipelines-controller
-oc apply --filename https://storage.googleapis.com/tekton-releases/latest/release.yaml
+oc new-project tekton --display-name='Tekton Pipelines'
+oc apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.notags.yaml
 ```
 You may now check any pods are running in the namespace tekton-pipelines
 ```
-oc get pods --namespace tekton-pipelines --watch
+oc get pods --namespace tekton --watch
 ```
-
 
 ### Installing Tekton in Kubernetes Cluster
 ```
 kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
 ```
-
 
 ### Installing Tekton Dashboard
 ```
