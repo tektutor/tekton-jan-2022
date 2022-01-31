@@ -40,3 +40,128 @@ Developing Kubernetes Operator involves writing lot of code, typically in Go pro
 
 ### What is Operator Metering?
  - a metrics system that accounts for Operators' use of cluster resources.
+
+### Creating a CRD 
+```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
+kubectl create -f etcd-operator-crd.yaml
+```
+
+Listing the crd
+```
+kubectl get crd
+```
+
+### Definig Operator Service Account
+```
+cd tekton-jan-2022
+git pull
+cd Day3/declarative-scripts
+kubectl create -f etcd-operator-sa.yaml
+```
+
+Listing the service accounts
+```
+kubectl get serviceaccounts
+```
+
+### Creating a role
+```
+kubectl create -f etcd-operator-role.yaml
+```
+
+### Creating a role-binding
+```
+kubectl create -f etcd-operator-rolebinding.yaml
+```
+
+### Deploying the etcd operator
+```
+kubectl create -f etcd-operator-deployment.yaml
+```
+
+Listing the deployment
+```
+kubectl get deployments
+```
+
+Listing the pods
+```
+kubectl get pods
+```
+
+
+### Creating an etcd cluster
+```
+kubectl create -f etcd-cluster-cr.yaml
+```
+
+Watch the pod status
+```
+kubectl get po -w
+```
+
+Find more details about the cluster
+```
+kubectl describe etcdcluster/example-etcd-cluster
+```
+
+List the services
+```
+kubectl get services --selector etcd_cluster=example-etcd-cluster
+```
+
+Testing if we can connect to the etcd
+```
+kubectl run --rm -i --tty etcdctl --image quay.io/coreos/etcd --restart=Never -- /bin/sh
+```
+In the container's shell
+```
+export ETCDCTL_API=3
+export ETCDCSVC=http://example-etcd-cluster-client:2379
+etcdctl --endpoints $ETCDCSVC put foo bar
+etcdctl --endpoints $ETCDCSVC get foo
+
+### Scaling the etcd cluster
+Update the size form 3 to 4 and apply the changes as shown below
+```
+kubectl apply -f etcd-cluster-cr.yaml
+```
+
+List the pods
+```
+kubectl get pods
+```
+
+### Failure and Automated Recovery
+Watch the pods from another terminal
+```
+kubectl get pods -w
+```
+
+Delete one of your etcd pod and see if it recovers automatically
+```
+kubectl delete pod <your-etcd-pod>
+```
+
+Watch the events
+```
+kubectl describe etcdcluster/example-etcd-cluster
+```
+
+### Upgrading etcd version from 3.1.10 to 3.2.13 by editing etcd-cluster-cr.yaml
+```
+kubectl apply -f etcd-cluster-cr.yaml
+```
+
+### Cleaning up
+```
+kubectl delete -f etcd-operator-sa.yaml
+kubectl delete -f etcd-operator-role.yaml
+kubectl delete -f etcd-operator-rolebinding.yaml
+kubectl delete -f etcd-operator-crd.yaml
+kubectl delete -f etcd-operator-deployment.yaml
+kubectl delete -f etcd-cluster-cr.yaml
+```
