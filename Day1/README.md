@@ -111,3 +111,64 @@ You can see the pods as shown below
 ```
 kubectl get po
 ```
+You can also watch the po status in real time as below
+```
+kubectl get po -w
+```
+
+You may also list many resources at the same time but watching all isn't possible
+```
+kubectl get deploy,rs,po
+```
+
+### Scaling up the deployment
+```
+kubectl scale deploy/nginx --replicas=6
+```
+
+### Scaling down the deployment
+```
+kubectl scale deploy/nginx --replicas=3
+```
+
+### Creating a NodePort external service
+```
+kubectl expose deploy/nginx --type=NodePort --port=80
+```
+
+You may list the service
+```
+kubectl get svc
+```
+You may also describe the service to see the endpoints and other details
+```
+kubectl describe svc/nginx 
+```
+
+### Creating a ClusterIP internal service
+```
+kubectl expose deploy/nginx --type=ClusterIP --port=80
+```
+
+You may list the service
+```
+kubectl get svc
+```
+You may also describe the service to see the endpoints and other details
+```
+kubectl describe svc/nginx 
+```
+
+### Creating a LoadBalancer external service
+```
+kubectl expose deploy/nginx --type=LoadBalancer --port=80
+```
+
+You may list the service
+```
+kubectl get svc
+```
+You may also describe the service to see the endpoints and other details
+```
+kubectl describe svc/nginx 
+```
