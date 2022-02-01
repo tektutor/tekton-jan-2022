@@ -153,7 +153,7 @@ oc login -u kubeadmin https://api.crc.testing:6443
 oc get projects
 ```
 
-### Checking your current active project
+### Checking your currently active project
 ```
 oc project
 ```
