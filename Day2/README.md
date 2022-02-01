@@ -254,3 +254,13 @@ http://rails-postgresql-example-tektutor.apps-crc.testing (svc/rails-postgresql-
 
 View details with 'oc describe <resource>/<name>' or list resources with 'oc get all'.
 </pre>
+
+### Login to the Web console and view your application as a developer
+From your Ubuntu VM Firefox Web browser, launch this url  https://console-openshift-console.apps-crc.testing
+Login credentials are
+<pre>
+Username - developer
+Password - developer
+</pre>
+
+Click on Topology to view the Ruby on Rails web application.  This is 2 tier application which has a frontend component and postgress db backend component. If you click on the arrow that shows up in the Topology (Ruby apps), you can 
