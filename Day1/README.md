@@ -137,14 +137,20 @@ kubectl create deploy nginx --image=nginx:1.18
 ```
 You may now check if the deployment is created 
 ```
+kubectl get deployments
+kubectl get deployment
 kubectl get deploy
 ```
 You can see the replicasets created as shown below
 ```
+kubectl get replicasets
+kubectl get replicaset
 kubectl get rs
 ```
 You can see the pods as shown below
 ```
+kubectl get pods
+kubectl get pod
 kubectl get po
 ```
 You can also watch the po status in real time as below
