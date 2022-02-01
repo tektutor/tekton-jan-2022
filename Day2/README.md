@@ -4,8 +4,8 @@ cd /home/alchemy/Downloads
 tar xvf crc-linux-amd64.tar.xz
 cd crc-linux-1.38.0-amd64
 ./crc setup
-./crc start
 ```
+
 The expected output is
 <pre>
 jegan@ubuntu:~/Downloads/crc-linux-1.38.0-amd64$ ./crc setup
@@ -124,8 +124,54 @@ Use the 'oc' command line interface:
 </pre>
 when the crc prompts for pull secret, you need to paste the content of pull-secret.txt and hit enter.
 
-### Login to CRC Cluster via CLI
+### Troubleshooting CRC start
+It is commonly noticed that ./crc start command fails many times. In such a case, try
+Make sure
+1. Virtualization is enabled (VT-X/AMD-V)
+2. You have sufficient RAM in the system atleast 16GB or more
+3. You have alteast 8 vCPU in your system
+
+```
+./crc stop
+./crc start
+```
+
+### Login to CRC Cluster as a developer via CLI
 ```
 eval $(./crc oc-env)
 oc login -u developer https://api.crc.testing:6443
+```
+
+### Login to CRC Cluster as an administrator via CLI
+```
+eval $(./crc oc-env)
+oc login -u kubeadmin https://api.crc.testing:6443
+```
+
+### Listing projects in Openshift
+```
+oc get projects
+```
+
+### Checking your current active project
+```
+oc project
+```
+
+### Switching to an existing project
+```
+oc project <project-name>
+```
+
+### Creating a new project
+In order to deploy any applications, you should first create a project in OpenShift.
+```
+oc new-project tektutor
+```
+Name of the project is user-defined, you may replace 'tektutor' with something you wish.
+
+### Delete a project
+This will delete all applications deployed within the project also. So think twice, before your do it.
+```
+oc delete project tektutor
 ```
