@@ -208,3 +208,29 @@ You may also describe the service to see the endpoints and other details
 ```
 kubectl describe svc/nginx 
 ```
+The expected output is
+<pre>
+[root@master ~]# <b>kubectl get svc</b>
+NAME         TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+hello        LoadBalancer   10.108.131.129   <pending>     80:31673/TCP   5h35m
+kubernetes   ClusterIP      10.96.0.1        <none>        443/TCP        40h
+nginx        NodePort       10.96.208.250    <none>        80:30421/TCP   6h45m
+[root@master ~]# <b>kubectl describe svc/hello</b>
+Name:                     hello
+Namespace:                default
+Labels:                   app=hello
+Annotations:              <none>
+Selector:                 app=hello
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.108.131.129
+IPs:                      10.108.131.129
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  31673/TCP
+Endpoints:                192.168.189.77:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+</pre>
