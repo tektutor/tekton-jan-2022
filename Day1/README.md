@@ -162,6 +162,21 @@ You may also list many resources at the same time but watching all isn't possibl
 ```
 kubectl get deploy,rs,po
 ```
+The expected output is
+<pre>
+[root@master ~]# kubectl create deploy nginx --image=nginx:1.18
+deployment.apps/nginx created
+[root@master ~]# kubectl get deploy,rs,po
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   1/1     1            1           15s
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-6888c79454   1         1         1       15s
+
+NAME                         READY   STATUS    RESTARTS        AGE
+pod/dnsutils                 1/1     Running   7 (4m50s ago)   7h5m
+pod/nginx-6888c79454-dmxnb   1/1     Running   0               15s
+</pre>
 
 ### Scaling up the deployment
 ```
