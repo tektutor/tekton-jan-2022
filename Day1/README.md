@@ -192,6 +192,9 @@ kubectl scale deploy/nginx --replicas=3
 ```
 kubectl expose deploy/nginx --type=NodePort --port=80
 ```
+The expected output is
+<pre>
+</pre>
 
 You may list the service
 ```
@@ -201,6 +204,27 @@ You may also describe the service to see the endpoints and other details
 ```
 kubectl describe svc/nginx 
 ```
+The expected output is
+<pre>
+[root@master ~]# kubectl describe svc/nginx
+Name:                     nginx
+Namespace:                default
+Labels:                   app=nginx
+Annotations:              <none>
+Selector:                 app=nginx
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.107.137.132
+IPs:                      10.107.137.132
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  30102/TCP
+Endpoints:                192.168.189.79:80,192.168.189.80:80,192.168.235.159:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+</pre>
 
 ### Creating a ClusterIP internal service
 ```
