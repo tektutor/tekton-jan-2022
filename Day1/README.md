@@ -46,8 +46,8 @@
 - ensures desired number of instance of Pods always runs and they are in a healthy state to respond to user requests.
 - if it identifies any Pod in a non-responsive status it will be replaced with a healthy new Pod
 - also supports
-    scaling up - creating additional Pods of your application when traffic to your application increases
-    scaling down - discarding idle Pods of your application when traffic to your appplication decreases
+    - scaling up - creating additional Pods of your application when traffic to your application increases
+    - scaling down - discarding idle Pods of your application when traffic to your appplication decreases
 - the desired instances of Pods that must be started comes from Deployment, hence updating desired count on the ReplicaSet level will be overriden by Deployment.
 
 ### Deployment
