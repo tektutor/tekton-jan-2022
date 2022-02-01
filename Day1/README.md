@@ -94,7 +94,43 @@ kubelet
   from respective image registry 
 - kubelet then creates the containers, monitors the health and constantly keeps reporting the status of all the containers running
   on that node to the API Server like a heart-beat update
-  
+
+### Listing the nodes in the K8s cluster
+```
+kubectl get nodes
+```
+The expected output is
+<pre>
+[root@master ~]# kubectl get nodes
+NAME      STATUS   ROLES                  AGE   VERSION
+master    Ready    control-plane,master   37h   v1.23.3
+worker1   Ready    <none>                 37h   v1.23.3
+worker2   Ready    <none>                 37h   v1.23.3
+</pre>
+
+### Listing the Kubernetes pods running in kube-system namespace
+```
+kubectl get po -n kube-system
+```
+The expected output is
+<pre>
+[root@master ~]# <b>kubectl get po -n kube-system</b>
+NAME                                       READY   STATUS    RESTARTS      AGE
+calico-kube-controllers-85b5b5888d-mgjfx   1/1     Running   1 (21h ago)   39h
+calico-node-dswp4                          1/1     Running   1 (21h ago)   39h
+calico-node-l75rk                          1/1     Running   1 (21h ago)   39h
+calico-node-wbn6q                          1/1     Running   1 (21h ago)   39h
+coredns-64897985d-6gcfp                    1/1     Running   1 (21h ago)   39h
+coredns-64897985d-9p6sm                    1/1     Running   1 (21h ago)   39h
+etcd-master                                1/1     Running   2 (21h ago)   39h
+kube-apiserver-master                      1/1     Running   3 (21h ago)   39h
+kube-controller-manager-master             1/1     Running   2 (21h ago)   39h
+kube-proxy-6dxbg                           1/1     Running   1 (21h ago)   39h
+kube-proxy-b2jh8                           1/1     Running   1 (21h ago)   39h
+kube-proxy-d7ztg                           1/1     Running   1 (21h ago)   39h
+kube-scheduler-master                      1/1     Running   2 (21h ago)   39h
+</pre>
+
 ### Deploying nginx in K8s cluster
 ```
 kubectl create deploy nginx --image=nginx:1.18
