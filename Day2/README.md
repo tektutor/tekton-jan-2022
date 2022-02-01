@@ -273,3 +273,12 @@ Password - developer
 
 Click on Topology to view the Ruby on Rails web application.  This is 2 tier application which has a frontend component and postgress db backend component. If you click on the arrow that shows up in the Topology (Ruby apps), you can 
 
+### Deploying an user-defined application into OpenShift via Dockerfile from GitHub
+Assuming you have already created a project.
+From the OpenShift Webconsole, select Add and then Select From Git.
+Type this URL https://github.com/tektutor/spring-ms.git
+
+### Deploying an user-defined application into OpenShift S2I given a GitHub URL
+Assuming you have already created a project.
+From the OpenShift Webconsole, select Add and then Select From Git.
+Type this URL https://github.com/tektutor/hello-spring-boot.git
