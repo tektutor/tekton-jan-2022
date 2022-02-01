@@ -30,7 +30,7 @@
     - user Pods are not scheduled in master node as a general best practice
 - worker node
     - user pods are deployed in the worker nodes
-    - 
+    
 ### Pod
 - a group of related containers
 - the Pod definition (YAML/JSON) is stored in the etcd datastore
