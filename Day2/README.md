@@ -175,3 +175,82 @@ This will delete all applications deployed within the project also. So think twi
 ```
 oc delete project tektutor
 ```
+
+### Deploying a ruby-on-rails sample application within your project
+The assumption is you already created a project and you switched to that project already.
+```
+oc new-app rails-postgresql-example
+```
+The expected output is
+<pre>
+jegan@ubuntu:~/Downloads/crc-linux-1.38.0-amd64$ oc new-app rails-postgresql-example
+--> Deploying template "openshift/rails-postgresql-example" to project tektutor
+
+     Rails + PostgreSQL (Ephemeral)
+     ---------
+     An example Rails application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/sclorg/rails-ex/blob/master/README.md.
+     
+     WARNING: Any data stored will be lost upon pod destruction. Only use this template for testing.
+
+     The following service(s) have been created in your project: rails-postgresql-example, postgresql.
+     
+     For more information about using this template, including OpenShift considerations, see https://github.com/sclorg/rails-ex/blob/master/README.md.
+
+     * With parameters:
+        * Name=rails-postgresql-example
+        * Namespace=openshift
+        * Memory Limit=512Mi
+        * Memory Limit (PostgreSQL)=512Mi
+        * Git Repository URL=https://github.com/sclorg/rails-ex.git
+        * Git Reference=
+        * Context Directory=
+        * Application Hostname=
+        * GitHub Webhook Secret=Kme84jEsgb26ttBexijED3FeV3qXr2YnJG4TUrnx # generated
+        * Secret Key=ngr720y6pmlrtqkv5adua5ya8p6tmlegctv7ricv8m5kkcmlepv27b5kw6d21yxkk8v4oey5nuv7fv7qlvgc2it3k30efd7q66mdrgwva8e5rtyjq2seyrpsqhuvlp3 # generated
+        * Application Username=openshift
+        * Application Password=secret
+        * Rails Environment=production
+        * Database Service Name=postgresql
+        * Database Username=user0D3 # generated
+        * Database Password=beBlQecG # generated
+        * Database Name=root
+        * Maximum Database Connections=100
+        * Shared Buffer Amount=12MB
+        * Custom RubyGems Mirror URL=
+
+--> Creating resources ...
+    secret "rails-postgresql-example" created
+    service "rails-postgresql-example" created
+    route.route.openshift.io "rails-postgresql-example" created
+    imagestream.image.openshift.io "rails-postgresql-example" created
+    buildconfig.build.openshift.io "rails-postgresql-example" created
+    deploymentconfig.apps.openshift.io "rails-postgresql-example" created
+    service "postgresql" created
+    deploymentconfig.apps.openshift.io "postgresql" created
+--> Success
+    Access your application via route 'rails-postgresql-example-tektutor.apps-crc.testing' 
+    Build scheduled, use 'oc logs -f buildconfig/rails-postgresql-example' to track its progress.
+    Run 'oc status' to view your app.
+</pre>
+
+You can check the application status
+```
+oc status
+```
+The expected output is
+<pre>
+jegan@ubuntu:~/Downloads/crc-linux-1.38.0-amd64$ oc status
+In project tektutor on server https://api.crc.testing:6443
+
+svc/postgresql - 10.217.5.60:5432
+  dc/postgresql deploys openshift/postgresql:12-el8 
+    deployment #1 running for 20 seconds - 0/1 pods
+
+http://rails-postgresql-example-tektutor.apps-crc.testing (svc/rails-postgresql-example)
+  dc/rails-postgresql-example deploys istag/rails-postgresql-example:latest <-
+    bc/rails-postgresql-example source builds https://github.com/sclorg/rails-ex.git on openshift/ruby:2.6-ubi8 
+      build #1 pending for 21 seconds
+    deployment #1 waiting on image or update
+
+View details with 'oc describe <resource>/<name>' or list resources with 'oc get all'.
+</pre>
