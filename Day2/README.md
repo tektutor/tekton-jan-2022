@@ -133,12 +133,15 @@ Use the 'oc' command line interface:
 when the crc prompts for pull secret, you need to paste the content of pull-secret.txt and hit enter.
 
 ### Troubleshooting CRC start
-It is commonly noticed that ./crc start command fails many times. In such a case, try
+It is commonly noticed that ./crc start command fails many times. 
+
 Make sure
+
 1. Virtualization is enabled (VT-X/AMD-V)
 2. You have sufficient RAM in the system atleast 16GB or more
 3. You have alteast 8 vCPU in your system
 
+Try to stop and start
 ```
 ./crc stop
 ./crc start
