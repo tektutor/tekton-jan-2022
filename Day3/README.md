@@ -40,3 +40,35 @@ Developing Kubernetes Operator involves writing lot of code, typically in Go pro
 
 ### What is Operator Metering?
  - a metrics system that accounts for Operators' use of cluster resources.
+ - Budgeting, Billing, Metrics aggregation
+### What is an Operator Maturity Model?
+
+Phase 1 - Basic Installation
+ - Automated application provisioning and configuration Management
+ - Can be done using Helm, Ansible/Puppet/Chef/Salt or Go
+
+Phase 2 - Seamless Upgrades
+ - Patch and minor version upgrades
+ - Can be done using Helm, Ansible/Puppet/Chef/Salt or Go
+
+PHase 3 - Full Lifecycle
+ - App lifecycle, storage lifecycle ( backup, failure and recovery )
+ - Can be done Using Configuration Management Tools (Ansible, Puppet, Chef or Salt )
+ - Can also done in Go
+
+Phase 4 - Deep Insights
+ - Metrics, alerts, log processing and worload analysis
+ - Can be automated Using Configuration Management Tools (Ansible, Puppet, Chef or Salt )
+ - Can also be automated in Go
+
+Phase 5 - Auto Pilot
+ - Horizontal/Vertical scaling
+ - auto config tuning
+ - abnormal detection
+ - schedule tuning
+ - Can be automated Using Configuration Management Tools (Ansible, Puppet, Chef or Salt )
+ - Can also be automated in Go
+
+
+
+ - 
