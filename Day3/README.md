@@ -81,7 +81,7 @@ Install the operator by running the following command
 kubectl create -f https://operatorhub.io/install/etcd.yaml
 ```
 
-Watch your etcd cluster coming up
+Watch your etcd operator coming up
 ```
 kubectl get csv -n my-etcd
 ```
