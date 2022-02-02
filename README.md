@@ -8,7 +8,7 @@ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /
 
 ### Create kubernetes secrets for Docker registry
 ```
-kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1 --docker-username=<your-docker-login> --docker-password=<your-docker-password> --docker-email=<your-registered-docker-email>
+kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=sonuprasad --docker-password=alchemycloud@123 --docker-email=sonuprasad.alchemy@gmail.com
 ```
 
 List the secrets
@@ -17,21 +17,34 @@ kubectl get secret
 ```
 
 ### Applying docker registry credentials to deploy
-pod.yml
+nginx-deploy
 ```
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: docker-registry
+  labels:
+    app: nginx
+  name: nginx
+  namespace: default
 spec:
-  containers:
-    - name: docker-registry
-      image: nginx:1.20
-  imagePullSecrets:
-   - name: regcred
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: nginx:1.20
+          imagePullPolicy: IfNotPresent
+          name: nginx
+                      
 ```
 
-```
 kubectl apply -f pod.yml
 ```
 List the pod
