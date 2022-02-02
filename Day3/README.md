@@ -18,7 +18,7 @@ Stateless applications in Kubernetes are deployed, monitored and healed automati
 
 Stateful applications are associated with a data that are read, updated, deleted, etc.,
 When a cluster of such applications are deployed into Kubernetes, it isn't possible for Kubernetes to automatically
-heal that when one of more replicas of the instances becomes unresponsive.  Hence, generally an expert who knows about the application better manages that.
+heal that when one of more replicas of the instances becomes unresponsive.  Hence, generally an expert who knows about the application better manages that manually.
 
 For example: 
    Deploying a Cluster of mongodb databases into K8s/Openshift, it isn't as straight forward as a stateless application.  
