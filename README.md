@@ -8,7 +8,7 @@ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /
 
 ### Create kubernetes secrets for Docker registry
 ```
-kubectl create secret docker-registry --docker-server=https://index.docker.io/v1 --docker-username=<your-docker-login> --docker-password=<your-docker-password> --docker-email=<your-registered-docker-email>
+kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1 --docker-username=<your-docker-login> --docker-password=<your-docker-password> --docker-email=<your-registered-docker-email>
 ```
 
 List the secrets
@@ -28,7 +28,7 @@ spec:
     - name: docker-registry
       image: nginx:1.20
   imagePullSecrets:
-   - name: docker-registry
+   - name: regcred
 ```
 
 ```
