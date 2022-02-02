@@ -76,12 +76,12 @@ Install Operator Lifecycle Manager (OLM)
 curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.20.0/install.sh | bash -s v0.20.0
 ```
 
-Install the operator by running the following command
+Install the Grafana operator by running the following command
 ```
-kubectl create -f https://operatorhub.io/install/etcd.yaml
+kubectl create -f https://operatorhub.io/install/grafana-operator.yaml
 ```
 
 Watch your etcd operator coming up
 ```
-kubectl get csv -n my-etcd
+kubectl get csv -n my-grafana-operator
 ```
