@@ -286,3 +286,33 @@ You can also pass values as shown below
 ```
 tkn task start task-with-default-values-to-params --showlog
 ```
+
+### Troubleshooting TaskRun
+failing-task.yml
+
+```
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: failing-task
+spec:
+  steps:
+    - image: invalid-container-image
+      command:
+         - echo "Forget it, this won't show up"
+```
+
+Let's run the task
+```
+oc apply -f ./failing-task.yml
+tkn task start failing-task
+```
+
+You can then troubleshoot this way
+```
+oc get tr failing-run-xxyyzz -o yaml
+```
+You need to find the TaskRun pod name and replace "failing-run-xxyyzz" with "your-taskrun-podname"
+
+Look for the reason section to understand the reason for the failure.
+
