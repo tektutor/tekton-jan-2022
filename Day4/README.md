@@ -1,3 +1,8 @@
+### Installing OpenShift CLI Tool
+```
+https://access.redhat.com/downloads/content/290/ver=4.9/rhel---8/4.9.18/x86_64/product-software
+```
+
 ### Installing Tekton CLI in CentOS 8.x
 For detailed instructions, you can head over to the official web page https://github.com/tektoncd/cli
 ```
