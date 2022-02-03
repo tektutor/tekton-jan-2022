@@ -240,3 +240,49 @@ You can also pass values as shown below
 ```
 tkn task start task-with-multiple-params --showlog -p greeting="Hello " -p who="Tekton !"
 ```
+
+### Adding a default value to Task parameter
+task-with-default-value-to-params.yml
+
+```
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-with-default-values-to-params
+spec
+  params:
+    - name: greeting
+      type: string
+      default: Hello
+  
+    - name: who
+      type: string
+      default: Tekton !
+  steps:
+    - name: Greet
+      image: registry.access.redhat.com/ubi8/ubi-minimal
+      command:
+        - /bin/bash
+        - -c
+        - echo "$(params.greeting) $(params.who)"
+```
+
+Now let's create the Task 
+```
+oc apply -f ./task-with-default-values-to-params.yml
+```
+
+List the task
+```
+tkn task ls
+```
+
+Run the task
+```
+tkn task start task-with-default-values-to-params --showlog
+```
+
+You can also pass values as shown below
+```
+tkn task start task-with-default-values-to-params --showlog
+```
