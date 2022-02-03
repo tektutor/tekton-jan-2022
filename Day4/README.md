@@ -140,6 +140,7 @@ spec
         - c
         - echo "Running Third Step ..."
 ```  
+
 Now let's create the Task 
 ```
 oc apply -f ./task-with-multiple-steps.yml
@@ -153,4 +154,45 @@ tkn task ls
 Run the task
 ```
 tkn task start multiple-steps --showlog
+```
+
+### Parametering your Task
+task-with-params.yml
+
+```
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-with-param
+spec
+  params:
+    - name: who
+      type: string
+  steps:
+    - name: Hello
+      image: registry.access.redhat.com/ubi8/ubi-minimal
+      command:
+        - /bin/bash
+        - -c
+        - echo "Hello $(params.who)"
+```
+
+Now let's create the Task 
+```
+oc apply -f ./task-with-params.yml
+```
+
+List the task
+```
+tkn task ls
+```
+
+Run the task
+```
+tkn task start task-with-param --showlog
+```
+
+You can also pass values as shown below
+```
+tkn task start task-with-param --showlog -p who="Tekton !"
 ```
