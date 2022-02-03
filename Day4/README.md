@@ -156,14 +156,14 @@ Run the task
 tkn task start multiple-steps --showlog
 ```
 
-### Parametering your Task
-task-with-params.yml
+### Parametering your Task with a single param
+task-with-single-param.yml
 
 ```
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: task-with-param
+  name: task-with-single-param
 spec
   params:
     - name: who
@@ -179,7 +179,7 @@ spec
 
 Now let's create the Task 
 ```
-oc apply -f ./task-with-params.yml
+oc apply -f ./task-with-single-param.yml
 ```
 
 List the task
@@ -189,10 +189,54 @@ tkn task ls
 
 Run the task
 ```
-tkn task start task-with-param --showlog
+tkn task start task-with-single-param --showlog
 ```
 
 You can also pass values as shown below
 ```
-tkn task start task-with-param --showlog -p who="Tekton !"
+tkn task start task-with-single-param --showlog -p who="Tekton !"
+```
+
+### Parametering your Task with a multiple params
+task-with-multiple-params.yml
+
+```
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-with-multiple-params
+spec
+  params:
+    - name: greeting
+      type: string
+  
+    - name: who
+      type: string
+  steps:
+    - name: Greet
+      image: registry.access.redhat.com/ubi8/ubi-minimal
+      command:
+        - /bin/bash
+        - -c
+        - echo "$(params.greeting) $(params.who)"
+```
+
+Now let's create the Task 
+```
+oc apply -f ./task-with-multiple-params.yml
+```
+
+List the task
+```
+tkn task ls
+```
+
+Run the task
+```
+tkn task start task-with-multiple-params --showlog
+```
+
+You can also pass values as shown below
+```
+tkn task start task-with-multiple-params --showlog -p greeting="Hello " -p who="Tekton !"
 ```
