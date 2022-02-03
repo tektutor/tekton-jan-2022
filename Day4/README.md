@@ -80,7 +80,10 @@ kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/
    - The respective status of Tasks are stored in the TaskRun
    - The respective status of Pipeline is stored in the PipelineRun
 
-### Creating your first Task
+### Creating your first Tekton Task in OpenShift
+
+hello.yml
+
 ```
 apiVersion: tekton.dev/v1beta1
 kind: Task
@@ -107,4 +110,47 @@ You may run the Task as
 tkn task start hello --showlog
 ```
 
+### Writing Task with multiple Steps
 
+task-with-multiple-steps.yml
+
+```
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: multiple-steps
+spec
+  steps:
+    - name: First Step
+      image: registry.access.redhat.com/ubi8/ubi-minimal
+      command:
+        - /bin/bash
+        - -c
+        - echo "Running First Step ..."
+    - name: Second Step
+      image: alpine
+      command:
+        - /bin/sh
+        - c
+        - echo "Running Second Step ..."
+    - name: Third Step
+      image: alpine
+      command:
+        - /bin/sh
+        - c
+        - echo "Running Third Step ..."
+```  
+Now let's create the Task 
+```
+oc apply -f ./task-with-multiple-steps.yml
+```
+
+List the task
+```
+tkn task ls
+```
+
+Run the task
+```
+tkn task start multiple-steps --showlog
+```
