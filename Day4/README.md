@@ -80,7 +80,31 @@ kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/
    - The respective status of Tasks are stored in the TaskRun
    - The respective status of Pipeline is stored in the PipelineRun
 
-
-
+### Creating your first Task
+```
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: hello
+spec:
+  steps:
+    - image: registry.access.redhat.com/ubi8/ubi-minimal
+      command:
+        - /bin/bash
+        - -c
+        - echo "Hello World"
+```
+You may now create the hello Task in OpenShift.
+```
+oc apply -f ./hello.yml
+```
+You may list the tasks as
+```
+tkn task ls
+```
+You may run the Task as
+```
+tkn task start hello --showlog
+```
 
 
