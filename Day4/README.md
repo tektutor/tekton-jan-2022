@@ -16,145 +16,71 @@ Client version: 0.21.0
 Pipeline version: v0.32.1
 </pre>
 
-### Installing Openshift(Code Ready Containers-CRC)
-```
-cd ~/Downloads
-tar xvf crc-linux-amd64.tar.xz
-cd crc-linux-1.38.0-amd64/
-./crc setup
-./crc start
-```
-
-The expected output is
-<pre>
-[jegan@tektutor crc-linux-1.38.0-amd64]$ ./crc start
-INFO Checking if running as non-root              
-INFO Checking if running inside WSL2              
-INFO Checking if crc-admin-helper executable is cached 
-INFO Checking for obsolete admin-helper executable 
-INFO Checking if running on a supported CPU architecture 
-INFO Checking minimum RAM requirements            
-INFO Checking if crc executable symlink exists    
-INFO Checking if Virtualization is enabled        
-INFO Checking if KVM is enabled                   
-INFO Checking if libvirt is installed             
-INFO Checking if user is part of libvirt group    
-INFO Checking if active user/process is currently part of the libvirt group 
-INFO Checking if libvirt daemon is running        
-INFO Checking if a supported libvirt version is installed 
-INFO Checking if crc-driver-libvirt is installed  
-INFO Checking crc daemon systemd socket units     
-INFO Checking if systemd-networkd is running      
-INFO Checking if NetworkManager is installed      
-INFO Checking if NetworkManager service is running 
-INFO Checking if /etc/NetworkManager/conf.d/crc-nm-dnsmasq.conf exists 
-INFO Checking if /etc/NetworkManager/dnsmasq.d/crc.conf exists 
-INFO Checking if libvirt 'crc' network is available 
-INFO Checking if libvirt 'crc' network is active  
-INFO Starting CodeReady Containers VM for OpenShift 4.9.12... 
-INFO CodeReady Containers instance is running with IP 192.168.130.11 
-INFO CodeReady Containers VM is running           
-INFO Check internal and public DNS query...       
-INFO Check DNS query from host...                 
-INFO Verifying validity of the kubelet certificates... 
-INFO Starting OpenShift kubelet service           
-INFO Waiting for kube-apiserver availability... [takes around 2min] 
-INFO Waiting for user's pull secret part of instance disk... 
-INFO Starting OpenShift cluster... [waiting for the cluster to stabilize] 
-INFO 2 operators are progressing: openshift-controller-manager, operator-lifecycle-manager-packageserver 
-INFO 2 operators are progressing: openshift-controller-manager, operator-lifecycle-manager-packageserver 
-INFO 3 operators are progressing: kube-apiserver, openshift-controller-manager, operator-lifecycle-manager-packageserver 
-INFO 2 operators are progressing: kube-apiserver, openshift-controller-manager 
-INFO Operator authentication is not yet available 
-INFO Operator authentication is not yet available 
-INFO All operators are available. Ensuring stability... 
-INFO Operators are stable (2/3)...                
-INFO Operators are stable (3/3)...                
-INFO Adding crc-admin and crc-developer contexts to kubeconfig... 
-Started the OpenShift cluster.
-
-The server is accessible via web console at:
-  https://console-openshift-console.apps-crc.testing
-
-Log in as administrator:
-  Username: kubeadmin
-  Password: B8XxM-aY9yz-zhwJY-5HU7d
-
-Log in as user:
-  Username: developer
-  Password: developer
-
-Use the 'oc' command line interface:
-  $ eval $(crc oc-env)
-  $ oc login -u developer https://api.crc.testing:6443
-</pre>
-
-You may login now as shown below
-
-<pre>
-[jegan@tektutor crc-linux-1.38.0-amd64]$ eval $(./crc oc-env)
-[jegan@tektutor crc-linux-1.38.0-amd64]$ oc login -u developer https://api.crc.testing:6443
-Logged into "https://api.crc.testing:6443" as "developer" using existing credentials.
-
-You don't have any projects. You can try to create a new project, by running
-
-    oc new-project <projectname>
-</pre>
-
-### Troubleshooting CRC start
-OpenShift creates a Virtual Machine
-
-OpenShift CRC requires 
-- Virtualization enabled on the BIOS
-- 8 GB RAM
-- 4 Virtual CPU cores
-- 35 GB storage, you may need more if you wish to install other operators
-
-Make sure your base machine where CRC is installed has more than 4 vCPUs, atleast 8 vCPUs, 16 GB RAM and 250~300 GB HDD(storage)
-
-At times, crc start get's struck due to memory/disk pressure,etc.  In such cases, you just need to
-```
-./crc stop
-./crc start
-```
 
 ### Installing Tekton in Openshift
-```
-oc new-project tekton --display-name='Tekton Pipelines'
-oc apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.notags.yaml
-```
-You may now check any pods are running in the namespace tekton-pipelines
-```
-oc get pods --namespace tekton --watch
-```
+Tekton can be installed from OpenShift webconsole "OpenShift Pipelines Operator" as an Administrator.  Pipeline can be created from any namespace.
 
 ### Installing Tekton in Kubernetes Cluster
 ```
 kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
 ```
 
-### Installing Tekton Dashboard
-```
-kubectl apply -f https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
-```
-Expected output is
-<pre>
-[root@master ~]# kubectl apply -f https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
-customresourcedefinition.apiextensions.k8s.io/extensions.dashboard.tekton.dev created
-serviceaccount/tekton-dashboard created
-role.rbac.authorization.k8s.io/tekton-dashboard-info created
-clusterrole.rbac.authorization.k8s.io/tekton-dashboard-backend created
-clusterrole.rbac.authorization.k8s.io/tekton-dashboard-tenant created
-rolebinding.rbac.authorization.k8s.io/tekton-dashboard-info created
-clusterrolebinding.rbac.authorization.k8s.io/tekton-dashboard-backend created
-configmap/dashboard-info created
-service/tekton-dashboard created
-deployment.apps/tekton-dashboard created
-clusterrolebinding.rbac.authorization.k8s.io/tekton-dashboard-tenant created
-</pre>
+### What is Tekton?
+- is an opensource project that helps creating and running CI/CD pipelines within Kubernetes and OpenShift.
+- is a cloud native CI/CD tool.
+- is a kubernetes native application that extends Kubernetes/OpenShift by adding Custom Resources like Task, TaskRun, Pipeline, PipelineRun etc.,
+- cloud-native CI/CD is based on 3 principles
+  1. Containers
+       - each CI/CD operation like compilation, testing, packaging, etc happens in an isolated container.
+  2. Serverless
+       - running and scaling CI/CD on demand without the need for a central CI engine
+  3. DevOps
+       - cloud-native CI/CD needs to be build with DevOps practices in mind
+       - teams are allowed to own their delivery pipelines
 
-Accessing the Tekton dashboard
-```
-kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
-```
-From your favourite web browser you can access the Tekton Dashboard @ http://localhost:9097
+### What is Tekton CLI?
+- command line tool that is used to manage Tekton pipeline
+- this tool makes it easier to interact with Tekton components better than oc or kubectl
+
+### What is Tekton Triggers?
+- child project of Tekton
+- allows users to add a way to launch pipelines based on webhooks 
+- using Triggers one can launch piepline each time a git push is done in your version control repository.
+
+### What is Tekton Catalog?
+- Tekton Tasks are reusable 
+- Tekton Tasks can be re-used in different Pipelines
+- Resusable tasks are available in https://github.com/tektoncd/catalog
+
+### Tekton building blocks
+- Steps, Tasks and Pipleline
+- Steps
+   - represents a single operation in CI/CD process
+   - each step runs in its own container
+   - once the step is completed, the container is dicarded 
+   - as the container will be disposed once the step completes, required data needs to be stored in a shared volume
+- Tasks
+    - is a collection of steps that run in a sequence
+    - Steps inside a single Task should be related to each other
+    - Task will be executed in a single Pod that enables Steps to share common Volume and shared resources
+    - Pre-written Tasks can be found in Tekton Catalog
+- Pipeline
+    - is a collection of Tasks that performs a series of operations on an input and potentially produce some output
+    - describes CI/CD workflow
+    - creates several Pods and runs them in a sequence or simultaneously as directed by the Pipeline code   
+- Workspaces
+   - is a shared volume that can be used across all Tasks running in a Pipeline
+- TasksRuns
+   - is an instance of Task
+   - used to execute a Task in a cluster
+- PipelineRuns
+   - is an instance of Pipeline
+   - represents how Pipeline is executed
+   - Once PipelineRun is statted, it automatically creates a TaskRun for each Task in the Pipeline
+   - The respective status of Tasks are stored in the TaskRun
+   - The respective status of Pipeline is stored in the PipelineRun
+
+
+
+
+
