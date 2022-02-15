@@ -9,7 +9,8 @@ kubectl delete svc/nginx
 cd tekton-jan-2022
 git pull
 cd Day3/nginx
-kubectl apply -f nginx-deployment.yml
+oc new-project tektutor
+oc apply -f nginx-deployment.yml
 ```
 
 ### Creating a NodePort service using declarative style
@@ -17,5 +18,24 @@ kubectl apply -f nginx-deployment.yml
 cd tekton-jan-2022
 git pull
 cd Day3/nginx
+oc project tektutor
 kubectl apply -f nginx-nodeport-svc.yml
 ```
+
+### Listing the services 
+```
+oc get svc
+```
+
+### Finding more details about a service
+```
+oc describe svc nginx
+```
+
+### Accessing the service
+```
+oc get nodes -o wide
+```
+
+curl http://node-ip:node-port
+
