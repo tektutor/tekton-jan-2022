@@ -18,6 +18,6 @@ spec:
       imagePullSecrets:
         - name: regcred
       containers:
-        - image: nginx:1.20
+        - image: twalter/openshift-nginx:stable
           imagePullPolicy: IfNotPresent
           name: nginx
